@@ -1,10 +1,14 @@
 import { Dropdown } from "bootstrap";
 import Swal from "sweetalert2";
 import { validarFormulario, Toast, confirmacion} from "../funciones";
+import DataTable from "datatables.net-bs5";
+import { lenguaje } from "../lenguaje";
+
 
 const formulario = document.querySelector('form')
-const tablaAlumnos = document.getElementById('tablaAlumnos');
+const tablaAlumnos = new DataTable("#tablaAlumnos");
 const btnBuscar = document.getElementById('btnBuscar');
+const formularioAlumno = document.getElementById('formularioAlumno');
 const btnModificar = document.getElementById('btnModificar');
 const btnGuardar = document.getElementById('btnGuardar');
 const btnCancelar = document.getElementById('btnCancelar');
@@ -37,16 +41,20 @@ const guardar = async (evento) => {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
 
-        console.log(data);
+        // console.log(data);
         // return
         
         const {codigo, mensaje,detalle} = data;
         let icon = 'info'
+
+        
         switch (codigo) {
+            
             case 1:
+               
                 formulario.reset();
                 icon = 'success'
-                buscar();
+                
                 break;
         
             case 0:
@@ -57,7 +65,7 @@ const guardar = async (evento) => {
             default:
                 break;
         }
-
+        buscar();
         Toast.fire({
             icon,
             text: mensaje
@@ -68,83 +76,83 @@ const guardar = async (evento) => {
     }
 }
 
+
+
+
 const buscar = async () => {
-
-    let alu_nombre = formulario.alu_nombre.value;
-    let alu_apellido = formulario.alu_apellido.value;
-    const url = `/final_IS2_cornelio/API/alumnos/buscar?alu_nombre=${alu_nombre}&alu_apellido=${alu_apellido}`;
-    const config = {
-        method : 'GET'
-    }
-
+    // e && e.preventDefault();
+    
     try {
-        const respuesta = await fetch(url, config)
-        const data = await respuesta.json();
-        
-        tablaAlumnos.tBodies[0].innerHTML = ''
-        const fragment = document.createDocumentFragment();
-        console.log(data);
-        // return;
-        if(data.length > 0){
-            let contador = 1;
-            data.forEach( alumno => {
-                // CREAMOS ELEMENTOS
-                const tr = document.createElement('tr');
-                const td1 = document.createElement('td')
-                const td2 = document.createElement('td')
-                const td3 = document.createElement('td')
-                const td4 = document.createElement('td')
-                const td5 = document.createElement('td')
-                const buttonModificar = document.createElement('button')
-                const buttonEliminar = document.createElement('button')
+      const url = "/final_IS2_cornelio/API/alumnos/buscar";
+      const headers = new Headers();
+      headers.append("X-requested-With", "fetch");
+  
+      const config = {
+        method: "GET",
+      };
+  
+      const respuesta = await fetch(url, config);
+      const data = await respuesta.json();
+  
+    //   console.log(data);
+    //   return;
+  
+    tablaAlumnos.destroy();
+      let contador = 1;
+      tablaAlumnos = new DataTable("#tablaAlumnos", {
+        language: lenguaje,
+        data: data,
+        columns: [
+          {
+            data: "id_alumnos",
+            render: () => {
+              return contador++;
+            },
+          },
 
-                // CARACTERISTICAS A LOS ELEMENTOS
-                buttonModificar.classList.add('btn', 'btn-warning')
-                buttonEliminar.classList.add('btn', 'btn-danger')
-                buttonModificar.textContent = 'Modificar'
-                buttonEliminar.textContent = 'Eliminar'
+          { data: "alu_grado" },
+          { data: "alu_arma" },
 
-                buttonModificar.addEventListener('click', () => colocarDatos(alumno))
-                buttonEliminar.addEventListener('click', () => eliminar(alumno.id_alumnos))
+          {
+                data: "id",
+                render: (data, type, row, meta) => {
+                  return `${row.alu_nombre} ${" "} ${row.alu_apellido} `;
+                },
+              }, 
 
-                td1.innerText = contador;
-                td2.innerText = alumno.alu_nombre
-                td3.innerText = alumno.alu_apellido
-                
-                
-                // ESTRUCTURANDO DOM
-                td4.appendChild(buttonModificar)
-                td5.appendChild(buttonEliminar)
-                tr.appendChild(td1)
-                tr.appendChild(td2)
-                tr.appendChild(td3)
-                tr.appendChild(td4)
-                tr.appendChild(td5)
-
-                fragment.appendChild(tr);
-
-                contador++;
-            })
-        }else{
-            const tr = document.createElement('tr');
-            const td = document.createElement('td')
-            td.innerText = 'No existen registros'
-            td.colSpan = 5
-            tr.appendChild(td)
-            fragment.appendChild(tr);
-        }
-
-        tablaAlumnos.tBodies[0].appendChild(fragment)
+          { data: "alu_nac" },
+       
+          {
+            data: "id_alumnos",
+            render: (data, type, row, meta) => {
+              return `<a type="button" class="btn btn-warning" onclick="asignarValores('${row.id_alumnos}', 
+              '${row.alu_nombre}',
+               '${row.alu_apellido}','${row.alu_grado}','${row.alu_arma}','${row.alu_nac}')">MODIFICAR</a>`;
+            },
+          },
+          {
+            data: "id_alumnos",
+            render: (data, type, row, meta) => {
+              return `<a type="button" class="btn btn-danger" onclick="eliminar('${row.id_alumnos}')">ELIMINAR</a>`;
+            },
+          },
+        ],
+      });
     } catch (error) {
-        console.log(error);
-    }
-}
+      console.log(error);
+    }
+  };
 
-const colocarDatos = (datos) => {
-    formulario.alu_nombre.value = datos.alu_nombre
-    formulario.alu_apellido.value = datos.alu_apellido
-    formulario.id_alumnos.value = datos.id_alumnos
 
+  window.asignarValores = (id_alumnos, alu_nombre, alu_apellido, alu_grado, alu_arma,  alu_nac) => {
+    formularioAlumno.id_alumnos.value = id_alumnos;
+    formularioAlumno.alu_nombre.value = alu_nombre;
+    formularioAlumno.alu_apellido.value = alu_apellido;
+    formularioAlumno.alu_grado.value = alu_grado;
+    formularioAlumno.alu_arma.value = alu_arma;
+    formularioAlumno.alu_nac.value = alu_nac;
+
+ 
     btnGuardar.disabled = true
     btnGuardar.parentElement.style.display = 'none'
     btnBuscar.disabled = true
@@ -154,9 +162,9 @@ const colocarDatos = (datos) => {
     btnCancelar.disabled = false
     btnCancelar.parentElement.style.display = ''
     divTabla.style.display = 'none'
-
-    // modalEjemploBS.show();
 }
+
+
 
 const cancelarAccion = () => {
     btnGuardar.disabled = false
@@ -170,9 +178,14 @@ const cancelarAccion = () => {
     divTabla.style.display = ''
 }
 
-const modificar = async () => {
-    if(!validarFormulario(formulario)){
-        alert('Debe llenar todos los campos');
+const modificar = async (evento) => {
+
+    evento.preventDefault();
+    if(!validarFormulario(formulario, ['id_alumnos'])){
+        Toast.fire({
+            icon: 'info',
+            text: 'Debe llenar todos los datos'
+        })
         return 
     }
 
@@ -188,6 +201,8 @@ const modificar = async () => {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
         
+
+        // console.log(data);
         const {codigo, mensaje,detalle} = data;
         let icon = 'info'
         switch (codigo) {
@@ -217,10 +232,11 @@ const modificar = async () => {
     }
 }
 
-const eliminar = async (id) => {
+window.eliminar = async (id_alumnos) => {
+    alert(id_alumnos);
     if(await confirmacion('warning','¿Desea eliminar este registro?')){
         const body = new FormData()
-        body.append('id_alumnos', id)
+        body.append('id_alumnos', id_alumnos)
         const url = '/final_IS2_cornelio/API/alumnos/eliminar';
         const config = {
             method : 'POST',
@@ -229,7 +245,7 @@ const eliminar = async (id) => {
         try {
             const respuesta = await fetch(url, config)
             const data = await respuesta.json();
-            console.log(data)
+            // console.log(data)
             const {codigo, mensaje,detalle} = data;
     
             let icon = 'info'
@@ -258,7 +274,10 @@ const eliminar = async (id) => {
         }
     }
 }
+
 buscar();
+
+
 formulario.addEventListener('submit', guardar )
 btnBuscar.addEventListener('click', buscar)
 btnCancelar.addEventListener('click', cancelarAccion)

@@ -42,4 +42,5 @@
         </table>
     </div>
 </div>
+
 <script src="<?= asset('./build/js/materias/index.js') ?>"></script>

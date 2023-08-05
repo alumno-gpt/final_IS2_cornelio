@@ -1,6 +1,7 @@
 import { Dropdown } from "bootstrap";
 import Swal from "sweetalert2";
 import { validarFormulario, Toast, confirmacion} from "../funciones";
+import DataTable from "datatables.net-bs5";
 
 const formulario = document.querySelector('form')
 const tablaMaterias = document.getElementById('tablaMaterias');
@@ -37,7 +38,7 @@ const guardar = async (evento) => {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
 
-        console.log(data);
+        // console.log(data);
         // return
         
         const {codigo, mensaje,detalle} = data;
@@ -68,6 +69,7 @@ const guardar = async (evento) => {
     }
 }
 
+
 const buscar = async () => {
 
     let ma_nombre = formulario.ma_nombre.value;
@@ -79,10 +81,10 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        
+        // console.log(data);
         tablaMaterias.tBodies[0].innerHTML = ''
         const fragment = document.createDocumentFragment();
-        console.log(data);
+        
         if(data.length > 0){
             let contador = 1;
             data.forEach( materia => {
@@ -165,6 +167,7 @@ const cancelarAccion = () => {
     divTabla.style.display = ''
 }
 
+
 const modificar = async () => {
     if(!validarFormulario(formulario)){
         alert('Debe llenar todos los campos');
@@ -224,7 +227,7 @@ const eliminar = async (id) => {
         try {
             const respuesta = await fetch(url, config)
             const data = await respuesta.json();
-            console.log(data)
+            // console.log(data)
             const {codigo, mensaje,detalle} = data;
     
             let icon = 'info'

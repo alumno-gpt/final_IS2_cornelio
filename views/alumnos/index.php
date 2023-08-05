@@ -4,8 +4,8 @@
         <input type="hidden" name="id_alumnos" id="id_alumnos">
         <div class="row mb-3">
             <div class="col">
-                <label for="alu_nombres">Nombre del alumno</label>
-                <input type="text" name="alu_nombres" id="alu_nombres" class="form-control">
+                <label for="alu_nombre">Nombre del alumno</label>
+                <input type="text" name="alu_nombre" id="alu_nombre" class="form-control">
             </div>
         </div>
         <div class="row mb-3">
@@ -51,17 +51,18 @@
 <div class="row justify-content-center" id="divTabla">
     <div class="col-lg-8">
         <h2>Listado de los alumnos</h2>
-        <table class="table table-bordered table-hover" id="tablaAlumnos">
+        <table class="table table-bordered table-hover table-responsive" id="tablaAlumnos">
             <thead class="table-dark">
                 <tr>
                     <th>NO. </th>
-                    <th>NOMBRE</th>
-                    <th>APELLIDO</th>
                     <th>GRADO</th>
                     <th>ARMA</th>
-                    <th>DAVIONALIDAD</th>
+                    <th>NOMBRE Y APELLIDO</th>
+                    
+                    <th>NACIONALIDAD</th>
                     <th>MODIFICAR</th>
                     <th>ELIMMINAR</th>
+
                 </tr>
             </thead>
             <tbody>
