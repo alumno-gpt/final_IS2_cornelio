@@ -83,7 +83,6 @@ const buscar = async () => {
         tablaMaterias.tBodies[0].innerHTML = ''
         const fragment = document.createDocumentFragment();
         console.log(data);
-        // return;
         if(data.length > 0){
             let contador = 1;
             data.forEach( materia => {
@@ -91,6 +90,8 @@ const buscar = async () => {
                 const tr = document.createElement('tr');
                 const td1 = document.createElement('td')
                 const td2 = document.createElement('td')
+                const td3 = document.createElement('td')
+                const td4 = document.createElement('td')
                 const buttonModificar = document.createElement('button')
                 const buttonEliminar = document.createElement('button')
 
@@ -108,10 +109,12 @@ const buscar = async () => {
                 
                 
                 // ESTRUCTURANDO DOM
-                td4.appendChild(buttonModificar)
-                td5.appendChild(buttonEliminar)
+                td3.appendChild(buttonModificar)
+                td4.appendChild(buttonEliminar)
                 tr.appendChild(td1)
                 tr.appendChild(td2)
+                tr.appendChild(td3)
+                tr.appendChild(td4)
 
 
                 fragment.appendChild(tr);
@@ -122,7 +125,7 @@ const buscar = async () => {
             const tr = document.createElement('tr');
             const td = document.createElement('td')
             td.innerText = 'No existen registros'
-            td.colSpan = 5
+            td.colSpan = 4
             tr.appendChild(td)
             fragment.appendChild(tr);
         }

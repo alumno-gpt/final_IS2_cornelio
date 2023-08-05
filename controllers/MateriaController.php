@@ -98,7 +98,7 @@ class MateriaController{
     public static function buscarAPI(){
         $ma_nombre = $_GET['ma_nombre'];
 
-        $sql = "SELECT * FROM materias where  = 1 ";
+        $sql = "SELECT * FROM materias where detalle_situacion = 1 ";
         if($ma_nombre != '') {
             $sql.= " and ma_nombre like '%$ma_nombre%' ";
         }
