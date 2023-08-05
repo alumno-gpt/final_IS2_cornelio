@@ -6,7 +6,7 @@
     <script src="build/js/app.js"></script>
     <link rel="shortcut icon" href="<?= asset('images/cit.png') ?>" type="image/x-icon">
     <link rel="stylesheet" href="<?= asset('build/styles.css') ?>">
-    <title>Proyecto 1</title>
+    <title>Final_IS2_Cornelio</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark  bg-dark">
@@ -16,15 +16,15 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="/proyecto1/">
+            <a class="navbar-brand" href="/final_IS2_cornelio/">
                 <img src="<?= asset('./images/tienda.png') ?>" width="35px'" alt="cit" >
-                Proyecto1
+                Final_IS2_Cornelio
             </a>
             <div class="collapse navbar-collapse" id="navbarToggler">
                 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin: 0;">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/proyecto1/"><i class="bi bi-house-fill me-2"></i>Inicio</a>
+                        <a class="nav-link" aria-current="page" href="/final_IS2_cornelio/"><i class="bi bi-house-fill me-2"></i>Inicio</a>
                     </li>
   
                     <div class="nav-item dropdown " >
@@ -34,7 +34,7 @@
                         <ul class="dropdown-menu  dropdown-menu-dark "id="dropwdownRevision" style="margin: 0;">
                             <!-- <h6 class="dropdown-header">Información</h6> -->
                             <li>
-                                <a class="dropdown-item nav-link text-white " href="/proyecto1/productos"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Productos</a>
+                                <a class="dropdown-item nav-link text-white " href="/final_IS2_cornelio/alumnos"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Alumnos</a>
                             </li>
                         
                     

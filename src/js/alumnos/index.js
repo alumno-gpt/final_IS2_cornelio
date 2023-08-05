@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { validarFormulario, Toast, confirmacion} from "../funciones";
 
 const formulario = document.querySelector('form')
-const tablaProductos = document.getElementById('tablaProductos');
+const tablaAlumnos = document.getElementById('tablaAlumnos');
 const btnBuscar = document.getElementById('btnBuscar');
 const btnModificar = document.getElementById('btnModificar');
 const btnGuardar = document.getElementById('btnGuardar');
@@ -17,7 +17,7 @@ btnCancelar.parentElement.style.display = 'none'
 
 const guardar = async (evento) => {
     evento.preventDefault();
-    if(!validarFormulario(formulario, ['producto_id'])){
+    if(!validarFormulario(formulario, ['id_alumnos'])){
         Toast.fire({
             icon: 'info',
             text: 'Debe llenar todos los datos'
@@ -26,11 +26,10 @@ const guardar = async (evento) => {
     }
 
     const body = new FormData(formulario)
-    body.delete('producto_id')
-    const url = '/proyecto1/API/productos/guardar';
+    body.delete('id_alumnos')
+    const url = '/final_IS2_cornelio/API/alumnos/guardar';
     const config = {
         method : 'POST',
-        // body: otroNombre
         body
     }
 
@@ -71,9 +70,9 @@ const guardar = async (evento) => {
 
 const buscar = async () => {
 
-    let producto_nombre = formulario.producto_nombre.value;
-    let producto_precio = formulario.producto_precio.value;
-    const url = `/proyecto1/API/productos/buscar?producto_nombre=${producto_nombre}&producto_precio=${producto_precio}`;
+    let alu_nombre = formulario.alu_nombre.value;
+    let alu_apellido = formulario.alu_apellido.value;
+    const url = `/final_IS2_cornelio/API/alumnos/buscar?alu_nombre=${alu_nombre}&alu_apellido=${alu_apellido}`;
     const config = {
         method : 'GET'
     }
@@ -82,13 +81,13 @@ const buscar = async () => {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
         
-        tablaProductos.tBodies[0].innerHTML = ''
+        tablaAlumnos.tBodies[0].innerHTML = ''
         const fragment = document.createDocumentFragment();
         console.log(data);
         // return;
         if(data.length > 0){
             let contador = 1;
-            data.forEach( producto => {
+            data.forEach( alumno => {
                 // CREAMOS ELEMENTOS
                 const tr = document.createElement('tr');
                 const td1 = document.createElement('td')
@@ -105,12 +104,12 @@ const buscar = async () => {
                 buttonModificar.textContent = 'Modificar'
                 buttonEliminar.textContent = 'Eliminar'
 
-                buttonModificar.addEventListener('click', () => colocarDatos(producto))
-                buttonEliminar.addEventListener('click', () => eliminar(producto.producto_id))
+                buttonModificar.addEventListener('click', () => colocarDatos(alumno))
+                buttonEliminar.addEventListener('click', () => eliminar(alumno.id_alumnos))
 
                 td1.innerText = contador;
-                td2.innerText = producto.producto_nombre
-                td3.innerText = producto.producto_precio
+                td2.innerText = alumno.alu_nombre
+                td3.innerText = alumno.alu_apellido
                 
                 
                 // ESTRUCTURANDO DOM
@@ -135,16 +134,16 @@ const buscar = async () => {
             fragment.appendChild(tr);
         }
 
-        tablaProductos.tBodies[0].appendChild(fragment)
+        tablaAlumnos.tBodies[0].appendChild(fragment)
     } catch (error) {
         console.log(error);
     }
 }
 
 const colocarDatos = (datos) => {
-    formulario.producto_nombre.value = datos.producto_nombre
-    formulario.producto_precio.value = datos.producto_precio
-    formulario.producto_id.value = datos.producto_id
+    formulario.alu_nombre.value = datos.alu_nombre
+    formulario.alu_apellido.value = datos.alu_apellido
+    formulario.id_alumnos.value = datos.id_alumnos
 
     btnGuardar.disabled = true
     btnGuardar.parentElement.style.display = 'none'
@@ -178,7 +177,7 @@ const modificar = async () => {
     }
 
     const body = new FormData(formulario)
-    const url = '/proyecto1/API/productos/modificar';
+    const url = '/final_IS2_cornelio/API/alumnos/modificar';
     const config = {
         method : 'POST',
         body
@@ -221,8 +220,8 @@ const modificar = async () => {
 const eliminar = async (id) => {
     if(await confirmacion('warning','¿Desea eliminar este registro?')){
         const body = new FormData()
-        body.append('producto_id', id)
-        const url = '/proyecto1/API/productos/eliminar';
+        body.append('id_alumnos', id)
+        const url = '/final_IS2_cornelio/API/alumnos/eliminar';
         const config = {
             method : 'POST',
             body

@@ -3,26 +3,22 @@
 namespace Controllers;
 
 use Exception;
-use Model\Producto;
+use Model\Alumno;
 use MVC\Router;
 
-class ProductoController{
+class AlumnoController{
     public static function index(Router $router){
-        $productos = Producto::all();
-        // $productos2 = Producto::all();
-        // var_dump($productos);
-        // exit;
-        $router->render('productos/index', [
-            'productos' => $productos,
-            // 'productos2' => $productos2,
-        ]);
+        $alumnos = Alumno::all();
+        $router->render('alumnos/index', [
+            'alumnos' => $alumnos,
+      ]);
 
     }
 
     public static function guardarAPI(){
         try {
-            $producto = new Producto($_POST);
-            $resultado = $producto->crear();
+            $alumno = new Alumno($_POST);
+            $resultado = $alumno->crear();
 
             if($resultado['resultado'] == 1){
                 echo json_encode([
@@ -47,8 +43,8 @@ class ProductoController{
 
     public static function modificarAPI(){
         try {
-            $producto = new Producto($_POST);
-            $resultado = $producto->actualizar();
+            $alumno = new Alumno($_POST);
+            $resultado = $alumno->actualizar();
 
             if($resultado['resultado'] == 1){
                 echo json_encode([
@@ -73,10 +69,10 @@ class ProductoController{
 
     public static function eliminarAPI(){
         try {
-            $producto_id = $_POST['producto_id'];
-            $producto = Producto::find($producto_id);
-            $producto->producto_situacion = 0;
-            $resultado = $producto->actualizar();
+            $id_alumnos = $_POST['id_alumnos'];
+            $alumno = Alumno::find($id_alumnos);
+            $alumno-> detalle_situacion= 0;
+            $resultado = $alumno->actualizar();
 
             if($resultado['resultado'] == 1){
                 echo json_encode([
@@ -100,22 +96,22 @@ class ProductoController{
     }
 
     public static function buscarAPI(){
-        // $productos = Producto::all();
-        $producto_nombre = $_GET['producto_nombre'];
-        $producto_precio = $_GET['producto_precio'];
+        // $alumnos = Alumno::all();
+        $alu_nombre = $_GET['alu_nombre'];
+        $alu_apellido = $_GET['alu_apellido'];
 
-        $sql = "SELECT * FROM productos where producto_situacion = 1 ";
-        if($producto_nombre != '') {
-            $sql.= " and producto_nombre like '%$producto_nombre%' ";
+        $sql = "SELECT * FROM alumnos where  = 1 ";
+        if($alu_nombre != '') {
+            $sql.= " and alu_nombre like '%$alu_nombre%' ";
         }
-        if($producto_precio != '') {
-            $sql.= " and producto_precio = $producto_precio ";
+        if($alu_apellido != '') {
+            $sql.= " and alu_apellido = $alu_apellido ";
         }
         try {
             
-            $productos = Producto::fetchArray($sql);
+            $alumnos = Alumno::fetchArray($sql);
     
-            echo json_encode($productos);
+            echo json_encode($alumnos);
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
