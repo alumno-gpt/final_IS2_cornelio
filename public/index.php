@@ -20,7 +20,7 @@ $router->post('/API/alumnos/eliminar', [AlumnoController::class,'eliminarAPI'] )
 
 
 $router->get('/calificaciones', [CalificacionController::class,'index'] );
-$router->post('/API/calificaciones/guardar', [CalificacionController::class,'guardarAPI'] );
+$router->post('/API/calificaciones/guardar', [CalificacionController::class,'guardarAPI'] ); 
 $router->get('/API/calificaciones/buscar', [CalificacionController::class,'buscarAPI'] );
 $router->post('/API/calificaciones/modificar', [CalificacionController::class,'modificarAPI'] );
 $router->post('/API/calificaciones/eliminar', [CalificacionController::class,'eliminarAPI'] );
