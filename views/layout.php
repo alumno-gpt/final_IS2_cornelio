@@ -39,6 +39,9 @@
                             <li>
                                 <a class="dropdown-item nav-link text-white " href="/final_IS2_cornelio/materias"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Materias</a>
                             </li>               
+                            <li>
+                                <a class="dropdown-item nav-link text-white " href="/final_IS2_cornelio/calificaciones"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>calificaciones</a>
+                            </li>               
                         </ul>
                     </div> 
                 </ul> 

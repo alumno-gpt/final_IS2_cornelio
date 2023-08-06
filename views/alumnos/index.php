@@ -55,10 +55,10 @@
             <thead class="table-dark">
                 <tr>
                     <th>NO. </th>
+                    <th>NOMBRE</th>
+                    <th>APELLIDO</th>
                     <th>GRADO</th>
                     <th>ARMA</th>
-                    <th>NOMBRE Y APELLIDO</th>
-                    
                     <th>NACIONALIDAD</th>
                     <th>MODIFICAR</th>
                     <th>ELIMMINAR</th>
