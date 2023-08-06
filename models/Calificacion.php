@@ -24,4 +24,16 @@ class Calificacion extends ActiveRecord{
         $this->detalle_situacion = $args['detalle_situacion'] ?? '1';
     }
 
+    public function general(){
+        $sql = "select id_calificaciones as id_calificaciones, 
+        calif_resultado as calif_resultado, 
+        calif_punteo as calif_punteo,
+        ma_nombre as calif_materia
+        from calificaciones INNER JOIN materias ON calif_materia = id_materias 
+        WHERE calificaciones.detalle_situacion = 1";
+
+        return self::consultarSQL($sql);
+
+    }
+
 }

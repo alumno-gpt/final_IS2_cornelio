@@ -3,13 +3,11 @@
 namespace Controllers;
 
 use Exception;
-use Model\Calificacion;
+use Model\Asingacalificacion;
 use MVC\Router;
 
-
-class CalificacionController{
-    public static function index(Router $router)
-    { 
+class AsignacalificacionController{
+    public static function index(Router $router){ $calificaciones = Asingacalificacion::all();
        $alumnos = static::buscarAlumnos();
        $materias = static::buscarMaterias();
 
@@ -20,14 +18,46 @@ class CalificacionController{
 
     }
 
+
+
+    public function guardar(){
+        $sql = "INSERT INTO relacion_mat_alum(ma_alumno, ma_materia) VALUES ($this->ma_alumno, $this->ma_materia)";
+        $resultado = self::ejecutar($sql);
+        return $resultado;
+    }
+    
+    public function buscar(){
+        $sql = "SELECT * FROM relacion_mat_alum WHERE 1=1";
+    
+        if($this->id_mat_alum != null){
+            $sql .= " AND id_mat_alum = $this->id_mat_alum";
+        }
+    
+        if($this->ma_alumno != ''){
+            $sql .= " AND ma_alumno = $this->ma_alumno";
+        }
+    
+        if($this->ma_materia != ''){
+            $sql .= " AND ma_materia = $this->ma_materia";
+        }
+    
+        $resultado = self::servir($sql);
+        return $resultado;
+    }
+
+
+
+
+
+
     public static function guardarAPI(){
         try {
-            $calificacion = new Calificacion($_POST);
+            $calificacion = new Asingacalificacion($_POST);
             $resultado = $calificacion->crear();
 
             if($resultado['resultado'] == 1){
                 echo json_encode([
-                    'mensaje' => 'Registro guardado correctamente', 
+                    'mensaje' => 'Registro guardado correctamente',
                     'codigo' => 1
                 ]);
             }else{
@@ -48,7 +78,7 @@ class CalificacionController{
 
     public static function modificarAPI(){
         try {
-            $calificacion = new Calificacion($_POST);
+            $calificacion = new Asingacalificacion($_POST);
             $resultado = $calificacion->actualizar();
 
             if($resultado['resultado'] == 1){
@@ -72,26 +102,11 @@ class CalificacionController{
         }
     }
 
-    public static function buscarTodos(){
-        try{
-            $calificaciones = new Calificacion($_GET);
-            $resultados = $calificaciones->general();
-
-            echo json_encode($resultados);
-            
-        } catch (Exception $e) {
-            echo json_encode([
-                'detalle' => $e->getMessage(),
-                'mensaje' => 'Ocurrió un error',
-                'codigo' => 0
-            ]);
-        }
-    }
-
     public static function eliminarAPI(){
         try {
-            $calificacion = new Calificacion($_POST);
-            $calificacion->detalle_situacion = 0;
+            $id_calificaciones = $_POST['id_calificaciones'];
+            $calificacion = Asingacalificacion::find($id_calificaciones);
+            $calificacion-> detalle_situacion= 0;
             $resultado = $calificacion->actualizar();
 
             if($resultado['resultado'] == 1){
@@ -115,10 +130,7 @@ class CalificacionController{
         }
     }
 
-
-
     public static function buscarAPI(){
-
         $calif_alumno = $_GET['calif_alumno'];
 
         $sql = "SELECT * FROM calificaciones where detalle_situacion = 1 ";
@@ -127,7 +139,7 @@ class CalificacionController{
         }
         try {
             
-            $calificaciones = Calificacion::fetchArray($sql);
+            $calificaciones = Asingacalificacion::fetchArray($sql);
     
             echo json_encode($calificaciones);
         } catch (Exception $e) {
@@ -143,7 +155,7 @@ class CalificacionController{
     
        try {
            
-      $alumnos = Calificacion::fetchArray($sql);
+      $alumnos = Asingacalificacion::fetchArray($sql);
            if ($alumnos){
             return $alumnos;
 
@@ -160,7 +172,7 @@ class CalificacionController{
     
        try {
            
-      $materias = Calificacion::fetchArray($sql);
+      $materias = Asingacalificacion::fetchArray($sql);
            if ($materias){
             return $materias;
 
@@ -175,4 +187,3 @@ class CalificacionController{
 
 
 }
-

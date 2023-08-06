@@ -159,7 +159,11 @@ class ActiveRecord {
         foreach ($respuesta as $value) {
             $data[] = array_change_key_case( array_map( 'utf8_encode', $value) ); 
         }
+        if(!isset($data)){
+            $data=[];
+        }
         $resultado->closeCursor();
+        
         return $data;
     }
 

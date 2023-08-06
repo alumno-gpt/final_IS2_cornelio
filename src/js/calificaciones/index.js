@@ -3,13 +3,13 @@ import Swal from "sweetalert2";
 import { validarFormulario, Toast, confirmacion} from "../funciones";
 import DataTable from "datatables.net-bs5";
 
-const formulario = document.querySelector('form')
-// const tablacalificaciones = document.getElementById('tablacalificaciones');
+const formulario = document.querySelector('#formularioCalificaciones')
+const tablacalificaciones = document.getElementById('tablacalificaciones');
 const btnBuscar = document.getElementById('btnBuscar');
-// const btnModificar = document.getElementById('btnModificar');
+const btnModificar = document.getElementById('btnModificar');
 const btnGuardar = document.getElementById('btnGuardar');
 const btnCancelar = document.getElementById('btnCancelar');
-// const divTabla = document.getElementById('divTabla');
+const divTabla = document.getElementById('divTabla');
 
 btnModificar.disabled = true
 btnModificar.parentElement.style.display = 'none'
@@ -72,8 +72,9 @@ const guardar = async (evento) => {
 
 const buscar = async () => {
 
-    let ma_nombre = formulario.ma_nombre.value;
-    const url = `/final_IS2_cornelio/API/calificaciones/buscar?ma_nombre=${ma_nombre}`;
+    let calif_alumno = formulario.calif_alumno.value;
+    let calif_materia = formulario.calif_materia.value;
+    const url = `/final_IS2_cornelio/API/calificaciones/buscar?calif_alumno=${calif_alumno}&calif_materia=${calif_materia}`;
     const config = {
         method : 'GET'
     }
@@ -87,13 +88,16 @@ const buscar = async () => {
         
         if(data.length > 0){
             let contador = 1;
-            data.forEach( materia => {
+            data.forEach( calificaciones => {
                 // CREAMOS ELEMENTOS
                 const tr = document.createElement('tr');
                 const td1 = document.createElement('td')
                 const td2 = document.createElement('td')
                 const td3 = document.createElement('td')
                 const td4 = document.createElement('td')
+                const td5 = document.createElement('td')
+                const td6 = document.createElement('td')
+                const td7 = document.createElement('td')
                 const buttonModificar = document.createElement('button')
                 const buttonEliminar = document.createElement('button')
 
@@ -103,20 +107,26 @@ const buscar = async () => {
                 buttonModificar.textContent = 'Modificar'
                 buttonEliminar.textContent = 'Eliminar'
 
-                buttonModificar.addEventListener('click', () => colocarDatos(materia))
-                buttonEliminar.addEventListener('click', () => eliminar(materia.id_calificaciones))
+                buttonModificar.addEventListener('click', () => colocarDatos(calificaciones))
+                buttonEliminar.addEventListener('click', () => eliminar(calificaciones.id_calificaciones))
 
                 td1.innerText = contador;
-                td2.innerText = materia.ma_nombre
+                td2.innerText = calificaciones.calif_alumno;
+                td3.innerText = calificaciones.calif_materia;
+                td4.innerText = calificaciones.calif_punteo;
+                td5.innerText = calificaciones.calif_resultado;
                 
                 
                 // ESTRUCTURANDO DOM
-                td3.appendChild(buttonModificar)
-                td4.appendChild(buttonEliminar)
+                td6.appendChild(buttonModificar)
+                td7.appendChild(buttonEliminar)
                 tr.appendChild(td1)
                 tr.appendChild(td2)
                 tr.appendChild(td3)
                 tr.appendChild(td4)
+                tr.appendChild(td5)
+                tr.appendChild(td6)
+                tr.appendChild(td7)
 
 
                 fragment.appendChild(tr);
@@ -139,7 +149,7 @@ const buscar = async () => {
 }
 
 const colocarDatos = (datos) => {
-    formulario.ma_nombre.value = datos.ma_nombre
+    formulario.calif_alumno.value = datos.calif_alumno
     formulario.id_calificaciones.value = datos.id_calificaciones
 
     btnGuardar.disabled = true
@@ -215,7 +225,7 @@ const modificar = async () => {
     }
 }
 
-const eliminar = async (id) => {
+const eliminar = async (id_calificaciones) => {
     if(await confirmacion('warning','¿Desea eliminar este registro?')){
         const body = new FormData()
         body.append('id_calificaciones', id)
@@ -257,6 +267,7 @@ const eliminar = async (id) => {
     }
 }
 buscar();
+
 formulario.addEventListener('submit', guardar )
 btnBuscar.addEventListener('click', buscar)
 btnCancelar.addEventListener('click', cancelarAccion)
