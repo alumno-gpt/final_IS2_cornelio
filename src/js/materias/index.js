@@ -4,6 +4,8 @@ import { validarFormulario, Toast, confirmacion} from "../funciones";
 import DataTable from "datatables.net-bs5";
 
 const formulario = document.querySelector('form')
+//const tablaMaterias = document.getElementById('tablaMaterias');
+
 const tablaMaterias = document.getElementById('tablaMaterias');
 const btnBuscar = document.getElementById('btnBuscar');
 const btnModificar = document.getElementById('btnModificar');
@@ -81,10 +83,10 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        // console.log(data);
+        
         tablaMaterias.tBodies[0].innerHTML = ''
         const fragment = document.createDocumentFragment();
-        
+        console.log(data);
         if(data.length > 0){
             let contador = 1;
             data.forEach( materia => {
@@ -227,7 +229,7 @@ const eliminar = async (id) => {
         try {
             const respuesta = await fetch(url, config)
             const data = await respuesta.json();
-            // console.log(data)
+            console.log(data)
             const {codigo, mensaje,detalle} = data;
     
             let icon = 'info'

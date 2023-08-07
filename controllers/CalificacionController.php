@@ -12,23 +12,61 @@ class CalificacionController{
     { 
        $alumnos = static::buscarAlumnos();
        $materias = static::buscarMaterias();
+    //    $calif_alumno= static::buscarInfo();
 
         $router->render('calificaciones/index', [
             'alumnos' => $alumnos,
             'materias' => $materias,
+            // 'calif_alumno' => $calif_alumno,
       ]);
 
     }
 
-    public static function guardarAPI(){
+    // public static function guardarAPI(){
+    //     try {
+    //         $calificacion = new Calificacion($_POST);
+    //         $resultado = $calificacion->crear();
+
+    //         if($resultado['resultado'] == 1){
+    //             echo json_encode([
+    //                 'mensaje' => 'Registro guardado correctamente', 
+    //                 'codigo' => 1
+    //             ]);
+    //         }else{
+    //             echo json_encode([
+    //                 'mensaje' => 'Ocurrió un error',
+    //                 'codigo' => 0
+    //             ]);
+    //         }
+    //         // echo json_encode($resultado);
+    //     } catch (Exception $e) {
+    //         echo json_encode([
+    //             'detalle' => $e->getMessage(),
+    //             'mensaje' => 'Ocurrió un error',
+    //             'codigo' => 0
+    //         ]);
+    //     }
+    // }
+
+
+
+    function nota_literal($nota){
+        if($nota >= 70){
+            return "Gano";
+        }else{
+            return "Perdio";
+        }
+    }
+    function guardarAPI(){
         try {
             $calificacion = new Calificacion($_POST);
             $resultado = $calificacion->crear();
-
+    
             if($resultado['resultado'] == 1){
                 echo json_encode([
                     'mensaje' => 'Registro guardado correctamente', 
-                    'codigo' => 1
+                    'codigo' => 1,
+                    'nota_literal' => nota_literal($calificacion->nota)
                 ]);
             }else{
                 echo json_encode([
@@ -45,7 +83,6 @@ class CalificacionController{
             ]);
         }
     }
-
     public static function modificarAPI(){
         try {
             $calificacion = new Calificacion($_POST);
@@ -101,8 +138,28 @@ class CalificacionController{
         }
     }
 
+    // public function buscarInfo()
+    // {
+    //     $sql = "SELECT id_calificaciones, calif_resultado, calif_punteo, 
+    //     alu_nombre ||' '|| alu_apellido as calif_alumno, 
+    //     ma_nombre AS calif_materia
+    //     FROM calificaciones INNER JOIN materias ON calif_materia = id_materias 
+    //     INNER JOIN alumnos ON calif_alumno = id_alumnos
+    //     WHERE calificaciones.detalle_situacion = 1 ";
 
+    //     if($this->calif_alumno != '') {
+    //         $sql.= " and calif_alumno = '$this->calif_alumno' ";
+    //     }
+    //     if($this->calif_materia != '') {
+    //         $sql.= " and calif_materia = '$this->calif_materia' ";
+    //     }
+ 
+    //     return self::fetchArray($sql);
+    // }
 
+    
+    
+    //funcion para buscar en la API
     public static function buscarAPI(){ 
 
         $calificaciones = new Calificacion($_GET);
@@ -121,6 +178,8 @@ class CalificacionController{
             ]);
         }
     }
+    
+    //funcion para buscar el nombre del alumno
     public static function buscarAlumnos(){
         $sql= "SELECT * FROM alumnos where detalle_situacion = 1";
     
@@ -138,7 +197,9 @@ class CalificacionController{
 
        }
    }
-    public static function buscarMaterias(){
+   
+   //funcion para buscar el nombre de la materia
+   public static function buscarMaterias(){
         $sql= "SELECT * FROM materias where detalle_situacion = 1";
     
        try {
@@ -154,25 +215,6 @@ class CalificacionController{
        } catch (Exception $e) {
 
        }
-   }
-
-   public function buscarReporte(){
-       $sql = "SELECT materias.ma_nombre as calif_materia, calificaciones.calif_punteo as calif_punteo, calificaciones.calif_resultado as calif_resultado  
-       FROM calificaciones INNER JOIN materias ON materias.id_materias = calificaciones.calif_materia 
-       WHERE calificaciones.detalle_situacion = '1'";
-   
-       if($this->calif_alumno != ''){
-           $sql .= " AND calificaciones.calif_alumno = $this->calif_alumno";
-       }
-   
-       $resultado = self::servir($sql);
-       return $resultado;
-   }
-   private function promedio(){
-       $sql = "SELECT AVG(calif_punteo) as promedio FROM calificaciones WHERE calif_alumno = $this->calif_alumno AND detalle_situacion = '1'";
-       
-       $resultado = self::servir($sql);
-       return $resultado;
    }
 
 }

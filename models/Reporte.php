@@ -2,11 +2,8 @@
 
 namespace Model;
 
-class Reporte extends ActiveRecord{
-    public static $tabla = 'calificaciones';
-    public static $columnasDB = ['calif_alumno','calif_materia','calif_punteo','calif_resultado','detalle_situacion'];
-    public static $idTabla = 'id_calificaciones';
 
+class Reporte extends ActiveRecord{
     public $id_calificaciones;
     public $calif_alumno;
     public $calif_materia;
@@ -23,19 +20,4 @@ class Reporte extends ActiveRecord{
         $this->calif_resultado = $args['calif_resultado'] ?? '';
         $this->detalle_situacion = $args['detalle_situacion'] ?? '1';
     }
-
-
-
-public function buscar2(){
-        $sql = "SELECT materias.ma_nombre as calif_materia, calificaciones.calif_punteo as calif_punteo, calificaciones.calif_resultado as calif_resultado  
-        FROM calificaciones INNER JOIN materias ON materias.id_materias = calificaciones.calif_materia 
-        WHERE calificaciones.detalle_situacion = '1'";
-
-        if($this->calif_alumno != ''){
-            $sql .= " AND calificaciones.calif_alumno = $this->calif_alumno";
-        }
-
-        $resultado = self::fetchArray($sql);
-        return $resultado;
-    }    
 }

@@ -22,85 +22,59 @@
     </form>
 </div>
 
+
 <div class="container mt-5">
     <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <table class="table table-bordered table-hover">
-                            <h2  class="text-center">REPORTE DEL ALUMNO</h2>
-                    </thead>
-                    <?php if(count($alumnos) > 0):?>
-                        <?php foreach($alumnos as $key => $alumno) : ?>
+        <div class="col-lg-8">
+            <table class="table table-bordered table-hover">
+                <h2 class="text-center">REPORTE DEL ALUMNO</h2>
+                <?php if (count($alumnos) > 0): ?>
+                    <?php foreach ($alumnos as $alumno): ?>
                         <tr class="text-center">
-                        <tr>
                             <th>ALUMNO</th>
-                            <td><?= $alumno['alu_nombre'] . ' ' . $alumno['alu_apellido']?></td>
-                        </tr>  
+                            <td><?= $alumno->alu_nombre . ' ' . $alumno->alu_apellido ?></td>
+                        </tr>
                         <tr>
-                        <th>GRADO Y ARMA</th>
-                            <td><?= $alumno['alu_grado'] . ' ' . 'de' . ' ' . $alumno['alu_arma']?></td>
-                        </tr> 
+                            <th>GRADO Y ARMA</th>
+                            <td><?= $alumno->alu_grado . ' de ' . $alumno->alu_arma ?></td>
+                        </tr>
                         <tr>
-                        <th>NACIONALIDAD</th>
-                        <td><?= $alumno['alu_nac']?></td>
+                            <th>NACIONALIDAD</th>
+                            <td><?= $alumno->alu_nac ?></td>
                         </tr>
-                     <tbody>
-                           
-                        </tr>
-                        <?php endforeach ?>
-                        <?php else :?>
-                            <tr>
-                                <td colspan="4">NO EXISTEN REGISTROS</td>
-                            </tr>
-                        <?php endif?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <tr>
-            <h3 class="text-center">NOTAS OBTENIDAS</h3>
-        </tr>
-        <div class="row justify-content-center mt-4">
-            <div class="col-lg-8">
-                <table class="table table-bordered table-hover">
-                    <thead class="table-dark">
                         <tr>
-                            <th>NO. </th>
-                            <th>MATERIA</th>
-                            <th>PUNTEO</th>
-                            <th>RESULTADO</th>
+                            <th>NOTAS OBTENIDAS</th>
+                            <td>
+                                <table class="table table-bordered table-hover" id="tCalificacion">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>NO.</th>
+                                            <th>MATERIA</th>
+                                            <th>PUNTEO</th>
+                                            <th>RESULTADO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($alumno->calificaciones as $key => $calificacion): ?>
+                                            <tr class="text-center">
+                                                <td><?= $key + 1 ?></td>
+                                                <td><?= $calificacion->calif_materia ?></td>
+                                                <td><?= $calificacion->calif_punteo ?> PUNTOS</td>
+                                                <td><?= $calificacion->calif_resultado ?></td>
+                                            </tr>
+                                        <?php endforeach ?>
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php if(count($calificaciones) > 0):?>
-                        <?php foreach($calificaciones as $key => $calificacion) : ?>
-                        <tr class="text-center">
-                            <td><?= $key + 1 ?></td>
-                            <td><?= $calificacion['calif_materia']?></td>
-                            <td><?= $calificacion['calif_punteo']?> PUNTOS</td>
-                            <td><?= $calificacion['calif_resultado']?></td>
-                        </tr>
-                        <?php endforeach ?>
-                        <?php else :?>
-                            <tr>
-                                <td colspan="4">NO EXISTEN REGISTROS</td>
-                            </tr>
-                        <?php endif?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row justify-content-center mt-4">
-            <div class="col-lg-8">
-                <table class="table table-bordered table-hover">
-                    <tbody class="text-center">
-                        <tr>
-                            <td>PROMEDIO</td>
-                            <td><?= number_format($promedio[0]['PROMEDIO'], 2, '.', ',')?> PUNTOS</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <?php endforeach ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="2">NO EXISTEN REGISTROS</td>
+                    </tr>
+                <?php endif ?>
+            </table>
         </div>
     </div>
-<script src="<?= asset('./build/js/reportes/index.js') ?>"></script>
+</div>
+<!-- <script src="<?= asset('./build/js/reportes/index.js') ?>"></script> -->

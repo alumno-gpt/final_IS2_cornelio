@@ -51,7 +51,7 @@
                     <th>ID_ALUMNO</th>
                     <th>ID_MATERIA</th>
                     <th>CALIFICACION</th>
-                    <th>RESULTADO</th>
+                    <!-- <th>RESULTADO</th> -->
                     <th>MODIFICAR</th>
                     <th>ELIMINAR</th>
                 </tr>

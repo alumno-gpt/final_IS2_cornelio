@@ -95,7 +95,7 @@ const buscar = async () => {
                 const td2 = document.createElement('td')
                 const td3 = document.createElement('td')
                 const td4 = document.createElement('td')
-                const td5 = document.createElement('td')
+                // const td5 = document.createElement('td')
                 const td6 = document.createElement('td')
                 const td7 = document.createElement('td')
                 const buttonModificar = document.createElement('button')
@@ -114,7 +114,7 @@ const buscar = async () => {
                 td2.innerText = calificaciones.calif_alumno;
                 td3.innerText = calificaciones.calif_materia;
                 td4.innerText = calificaciones.calif_punteo;
-                td5.innerText = calificaciones.calif_resultado;
+                // td5.innerText = calificaciones.calif_resultado;
                 
                 
                 // ESTRUCTURANDO DOM
@@ -124,7 +124,7 @@ const buscar = async () => {
                 tr.appendChild(td2)
                 tr.appendChild(td3)
                 tr.appendChild(td4)
-                tr.appendChild(td5)
+                // tr.appendChild(td5)
                 tr.appendChild(td6)
                 tr.appendChild(td7)
 

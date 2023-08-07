@@ -42,8 +42,32 @@ class AlumnoController{
     }
 
 
+    // public function buscar()
+    // {
+    //     $sql = "SELECT * FROM alumnos where detalle_situacion = 1 ";
+    //     if($this->alu_nombre != '') {
+    //         $sql.= " and alu_nombre like '%$this->alu_nombre%' ";
+    //     }
+    //     if($this->alu_apellido != '') {
+    //         $sql.= " and alu_apellido like  '%$this->alu_apellido%' ";
+    //     }
+    //     if($this->alu_grado != '') {
+    //         $sql.= " and alu_grado like '%$this->alu_grado%' ";
+    //     }
+    //     if($this->alu_arma != '') {
+    //         $sql.= " and alu_arma like '%$this->alu_arma%' ";
+    //     }
+    //     if($this->alu_nac != '') {
+    //         $sql.= " and alu_nac like '%$this->alu_nac%' ";
+    //     }
 
-    public static function buscarAPI(){      
+                
+    //     return self::fetchArray($sql);
+
+
+    // }
+    public static function buscarAPI(){ 
+             
         try {
 
             $alumnos = new Alumno($_GET);
