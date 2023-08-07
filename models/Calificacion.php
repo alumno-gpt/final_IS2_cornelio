@@ -2,9 +2,10 @@
 
 namespace Model;
 
-class Calificacion extends ActiveRecord{
+class Calificacion extends ActiveRecord
+{
     public static $tabla = 'calificaciones';
-    public static $columnasDB = ['calif_alumno','calif_materia','calif_punteo','calif_resultado','detalle_situacion'];
+    public static $columnasDB = ['calif_alumno', 'calif_materia', 'calif_punteo', 'calif_resultado', 'detalle_situacion'];
     public static $idTabla = 'id_calificaciones';
 
     public $id_calificaciones;
@@ -14,7 +15,7 @@ class Calificacion extends ActiveRecord{
     public $calif_resultado;
     public $detalle_situacion;
 
-    public function __construct($args = [] )
+    public function __construct($args = [])
     {
         $this->id_calificaciones = $args['id_calificaciones'] ?? null;
         $this->calif_alumno = $args['calif_alumno'] ?? '';
@@ -33,18 +34,19 @@ class Calificacion extends ActiveRecord{
         INNER JOIN alumnos ON calif_alumno = id_alumnos
         WHERE calificaciones.detalle_situacion = 1 ";
 
-        if($this->calif_alumno != '') {
-            $sql.= " and calif_alumno = '$this->calif_alumno' ";
+        if ($this->calif_alumno != '') {
+            $sql .= " and calif_alumno = '$this->calif_alumno' ";
         }
-        if($this->calif_materia != '') {
-            $sql.= " and calif_materia = '$this->calif_materia' ";
+        if ($this->calif_materia != '') {
+            $sql .= " and calif_materia = '$this->calif_materia' ";
         }
- 
+
         return self::fetchArray($sql);
     }
 
-    public function eliminarCalificacion() {
-        $query = "UPDATE "  . static::$tabla . " SET detalle_situacion = 0 WHERE id_calificaciones = " . self::$db->quote($this->id_calificaciones);
+    public function eliminarCalificacion()
+    {
+        $query = "UPDATE " . static::$tabla . " SET detalle_situacion = 0 WHERE id_calificaciones = " . self::$db->quote($this->id_calificaciones);
         $resultado = self::$db->exec($query);
         return [
             'resultado' => $resultado,
