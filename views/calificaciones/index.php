@@ -2,16 +2,16 @@
 <div class="row justify-content-center mb-5">
     <form class="col-lg-8 border bg-light p-3" id="formularioCalificaciones">
         <input type="hidden" name="id_calificaciones" id="id_calificaciones">
-          <div class="col">
+          <div class="col m-3">
             <label for="#">Alumnos</label>
             <select class="form-control" name="calif_alumno" id="calif_alumno" >
                 <option value="">Seleccione alumno...</option>
                 <?php foreach ($alumnos as $alumno) : ?>
-                <option value="<?= $alumno['id_alumnos'] ?>"><?= $alumno['alu_nombre']?></option>
+                    <option value="<?= $alumno['id_alumnos'] ?>"><?= $alumno['alu_nombre'] . ' ' . $alumno['alu_apellido'] ?>
                 <?php endforeach ?>
             </select>
         </div>
-        <div class="col-lg-8">
+        <div class="col m-3">
             <label for="#">Materia</label>
             <select name="calif_materia" id="calif_materia" class="form-control">
                 <option value="">Selecciones materia...</option>
@@ -20,7 +20,7 @@
                 <?php endforeach ?> 
             </select>
         </div>
-        <div class="col-lg-4">
+        <div class="col m-3">
             <label for="#">Calificacion</label>
             <input type="number" step="any" name="calif_punteo" id="calif_punteo" class="form-control" placeholder="ejemplo: 75.50">
         </div>
@@ -62,4 +62,4 @@
     </div>
 </div>
 
-<script src="<?= asset('./build/js/materias/index.js') ?>"></script>
+<script src="<?= asset('./build/js/calificaciones/index.js') ?>"></script>

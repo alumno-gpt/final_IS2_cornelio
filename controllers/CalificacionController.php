@@ -72,22 +72,8 @@ class CalificacionController{
         }
     }
 
-    public static function buscarTodos(){
-        try{
-            $calificaciones = new Calificacion($_GET);
-            $resultados = $calificaciones->general();
-
-            echo json_encode($resultados);
-            
-        } catch (Exception $e) {
-            echo json_encode([
-                'detalle' => $e->getMessage(),
-                'mensaje' => 'Ocurrió un error',
-                'codigo' => 0
-            ]);
-        }
-    }
-
+    
+    
     public static function eliminarAPI(){
         try {
             $calificacion = new Calificacion($_POST);
@@ -117,19 +103,16 @@ class CalificacionController{
 
 
 
-    public static function buscarAPI(){
+    public static function buscarAPI(){ 
 
-        $calif_alumno = $_GET['calif_alumno'];
+        $calificaciones = new Calificacion($_GET);
 
-        $sql = "SELECT * FROM calificaciones where detalle_situacion = 1 ";
-        if($calif_alumno != '') {
-            $sql.= " and calif_alumno like '%$calif_alumno%' ";
-        }
         try {
             
-            $calificaciones = Calificacion::fetchArray($sql);
+            $resultado = $calificaciones->buscarInfo();
     
-            echo json_encode($calificaciones);
+            echo json_encode($resultado);
+
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
@@ -173,6 +156,24 @@ class CalificacionController{
        }
    }
 
+   public function buscarReporte(){
+       $sql = "SELECT materias.ma_nombre as calif_materia, calificaciones.calif_punteo as calif_punteo, calificaciones.calif_resultado as calif_resultado  
+       FROM calificaciones INNER JOIN materias ON materias.id_materias = calificaciones.calif_materia 
+       WHERE calificaciones.detalle_situacion = '1'";
+   
+       if($this->calif_alumno != ''){
+           $sql .= " AND calificaciones.calif_alumno = $this->calif_alumno";
+       }
+   
+       $resultado = self::servir($sql);
+       return $resultado;
+   }
+   private function promedio(){
+       $sql = "SELECT AVG(calif_punteo) as promedio FROM calificaciones WHERE calif_alumno = $this->calif_alumno AND detalle_situacion = '1'";
+       
+       $resultado = self::servir($sql);
+       return $resultado;
+   }
 
 }
 

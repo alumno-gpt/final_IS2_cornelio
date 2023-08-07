@@ -24,16 +24,23 @@ class Calificacion extends ActiveRecord{
         $this->detalle_situacion = $args['detalle_situacion'] ?? '1';
     }
 
-    public function general(){
-        $sql = "select id_calificaciones as id_calificaciones, 
-        calif_resultado as calif_resultado, 
-        calif_punteo as calif_punteo,
-        ma_nombre as calif_materia
-        from calificaciones INNER JOIN materias ON calif_materia = id_materias 
-        WHERE calificaciones.detalle_situacion = 1";
+    public function buscarInfo()
+    {
+        $sql = "SELECT id_calificaciones, calif_resultado, calif_punteo, 
+        alu_nombre ||' '|| alu_apellido as calif_alumno, 
+        ma_nombre AS calif_materia
+        FROM calificaciones INNER JOIN materias ON calif_materia = id_materias 
+        INNER JOIN alumnos ON calif_alumno = id_alumnos
+        WHERE calificaciones.detalle_situacion = 1 ";
 
-        return self::consultarSQL($sql);
-
+        if($this->calif_alumno != '') {
+            $sql.= " and calif_alumno = '$this->calif_alumno' ";
+        }
+        if($this->calif_materia != '') {
+            $sql.= " and calif_materia = '$this->calif_materia' ";
+        }
+ 
+        return self::fetchArray($sql);
     }
 
 }

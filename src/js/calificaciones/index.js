@@ -4,17 +4,17 @@ import { validarFormulario, Toast, confirmacion} from "../funciones";
 import DataTable from "datatables.net-bs5";
 
 const formulario = document.querySelector('#formularioCalificaciones')
-const tablacalificaciones = document.getElementById('tablacalificaciones');
+const tablacalificaciones = document.getElementById('tablaCalificaciones');
 const btnBuscar = document.getElementById('btnBuscar');
 const btnModificar = document.getElementById('btnModificar');
 const btnGuardar = document.getElementById('btnGuardar');
 const btnCancelar = document.getElementById('btnCancelar');
 const divTabla = document.getElementById('divTabla');
 
-btnModificar.disabled = true
-btnModificar.parentElement.style.display = 'none'
-btnCancelar.disabled = true
-btnCancelar.parentElement.style.display = 'none'
+btnModificar.disabled = true;
+btnModificar.parentElement.style.display = 'none';
+btnCancelar.disabled = true;
+btnCancelar.parentElement.style.display = 'none';
 
 const guardar = async (evento) => {
     evento.preventDefault();
@@ -82,7 +82,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        // console.log(data);
+        console.log(data);
         tablacalificaciones.tBodies[0].innerHTML = ''
         const fragment = document.createDocumentFragment();
         
