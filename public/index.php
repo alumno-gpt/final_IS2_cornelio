@@ -31,7 +31,7 @@ $router->post('/API/materias/modificar', [MateriaController::class,'modificarAPI
 $router->post('/API/materias/eliminar', [MateriaController::class,'eliminarAPI'] );
 
 $router->get('/reportes', [ReporteController::class,'index'] );
-$router->post('/API/reportes/buscar', [ReporteController::class,'buscarReporte'] );
+//$router->post('/API/reportes/buscar', [ReporteController::class,'buscarReporte'] );
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
