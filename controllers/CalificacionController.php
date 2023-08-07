@@ -115,7 +115,7 @@ class CalificacionController{
         try {
             $calificacion = new Calificacion($_POST);
             $calificacion->detalle_situacion = 0;
-            $resultado = $calificacion->actualizar();
+            $resultado = $calificacion->eliminarCalificacion();
 
             if($resultado['resultado'] == 1){
                 echo json_encode([
