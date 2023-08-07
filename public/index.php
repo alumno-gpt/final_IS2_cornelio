@@ -6,6 +6,7 @@ use Controllers\AppController;
 use Controllers\AlumnoController;
 use Controllers\CalificacionController;
 use Controllers\MateriaController;
+use Controllers\ReporteController;
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
@@ -28,6 +29,10 @@ $router->post('/API/materias/guardar', [MateriaController::class,'guardarAPI'] )
 $router->get('/API/materias/buscar', [MateriaController::class,'buscarAPI'] );
 $router->post('/API/materias/modificar', [MateriaController::class,'modificarAPI'] );
 $router->post('/API/materias/eliminar', [MateriaController::class,'eliminarAPI'] );
+
+$router->get('/reportes', [ReporteController::class,'index'] );
+$router->post('/API/reportes/buscar', [ReporteController::class,'buscarReporte'] );
+
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

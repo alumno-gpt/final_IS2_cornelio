@@ -9,6 +9,7 @@ module.exports = {
     'js/alumnos/index' : './src/js/alumnos/index.js',
     'js/calificaciones/index' : './src/js/calificaciones/index.js',
     'js/materias/index' : './src/js/materias/index.js',
+    'js/reportes/index' : './src/js/reportes/index.js',
   },
   output: {
     filename: '[name].js',

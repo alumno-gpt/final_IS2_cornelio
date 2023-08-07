@@ -17,8 +17,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="/final_IS2_cornelio/">
-                <img src="<?= asset('./images/tienda.png') ?>" width="35px'" alt="cit" >
-                Final_IS2_Cornelio
+                <img src="<?= asset('./images/escuela.png') ?>" width="35px'" alt="cit" >
+                Escuela de Informatica
             </a>
             <div class="collapse navbar-collapse" id="navbarToggler">
                 
@@ -29,7 +29,7 @@
   
                     <div class="nav-item dropdown " >
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            <i class="bi bi-gear me-2"></i>Dropdown
+                            <i class="bi bi-gear me-2"></i>Menu
                         </a>
                         <ul class="dropdown-menu  dropdown-menu-dark "id="dropwdownRevision" style="margin: 0;">
                             <!-- <h6 class="dropdown-header">Información</h6> -->
@@ -43,17 +43,11 @@
                                 <a class="dropdown-item nav-link text-white " href="/final_IS2_cornelio/calificaciones"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Calificaciones</a>
                             </li>               
                             <li>
-                                <a class="dropdown-item nav-link text-white " href="/final_IS2_cornelio/ver_calificaciones"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Ver calificaciones</a>
+                                <a class="dropdown-item nav-link text-white " href="/final_IS2_cornelio/reportes"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Ver calificaciones</a>
                             </li>               
                         </ul>
                     </div> 
-                </ul> 
-                <div class="col-lg-1 d-grid mb-lg-0 mb-2">
-                    <!-- Ruta relativa desde el archivo donde se incluye menu.php -->
-                    <a href="/menu/" class="btn btn-danger"><i class="bi bi-arrow-bar-left"></i>MENÚ</a>
-                </div>
-
-            
+                </ul>           
             </div>
         </div>
         
