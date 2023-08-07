@@ -82,7 +82,6 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        console.log(data);
         tablacalificaciones.tBodies[0].innerHTML = ''
         const fragment = document.createDocumentFragment();
         
@@ -228,7 +227,7 @@ const modificar = async () => {
 const eliminar = async (id_calificaciones) => {
     if(await confirmacion('warning','¿Desea eliminar este registro?')){
         const body = new FormData()
-        body.append('id_calificaciones', id)
+        body.append('id_calificaciones', id_calificaciones)
         const url = '/final_IS2_cornelio/API/calificaciones/eliminar';
         const config = {
             method : 'POST',

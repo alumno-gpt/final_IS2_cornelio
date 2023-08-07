@@ -6,7 +6,7 @@ use Exception;
 use Model\Calificacion;
 use Model\Alumno;
 use Model\Materia;
-// use Model\Reporte;
+use Model\Reporte;
 use MVC\Router;
 
 
@@ -18,30 +18,28 @@ class ReporteController{
         $alumnos = static::buscarAlumnos();
         $router->render('reportes/index', [
             'alumnos' => $alumnos,
-            // 'reportes' => $reportes,
       ]);
 
     }
+ 
 
-    
-    public function buscar2(){
-        $sql = "SELECT materias.ma_nombre as calif_materia, calificaciones.calif_punteo as calif_punteo, calificaciones.calif_resultado as calif_resultado  
-        FROM calificaciones INNER JOIN materias ON materias.id_materias = calificaciones.calif_materia 
-        WHERE calificaciones.detalle_situacion = '1'";
+    public static function genReporte()
+    {
+        try {
 
-        if($this->calif_alumno != ''){
-            $sql .= " AND calificaciones.calif_alumno = $this->calif_alumno";
+            $reporte = new Reporte($_GET);
+            $resultado = $reporte->genReporte();
+
+            echo json_encode($resultado);
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
         }
-
-        $resultado = self::servir($sql);
-        return $resultado;
     }
-    public function promedio(){
-        $sql = "SELECT AVG(calif_punteo) as promedio FROM calificaciones WHERE calif_alumno = $this->calif_alumno AND detalle_situacion = '1'";
-        
-        $resultado = self::servir($sql);
-        return $resultado;
-    }   
 
     public static function buscarAlumnos(){
         $sql= "SELECT * FROM alumnos where detalle_situacion = 1";

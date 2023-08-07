@@ -43,4 +43,11 @@ class Calificacion extends ActiveRecord{
         return self::fetchArray($sql);
     }
 
+    public function eliminarCalificacion() {
+        $query = "UPDATE "  . static::$tabla . " SET detalle_situacion = 0 WHERE id_calificaciones = " . self::$db->quote($this->id_calificaciones);
+        $resultado = self::$db->exec($query);
+        return [
+            'resultado' => $resultado,
+        ];
+    }
 }
