@@ -25,7 +25,7 @@ const guardar = async (evento) => {
       icon: "info",
       text: "Debe llenar todos los datos",
     });
-    return
+    return;
   }
 
   const body = new FormData(formulario);
@@ -43,7 +43,7 @@ const guardar = async (evento) => {
 
     const { codigo, mensaje, detalle } = data;
     let icon = "info";
-console.log(data);
+    console.log(data);
     if (codigo == 1) {
       Toast.fire({
         icon: "success",
@@ -64,121 +64,120 @@ console.log(data);
 };
 
 const buscar = async () => {
-
   let alu_nombre = formulario.alu_nombre.value;
   let alu_apellido = formulario.alu_apellido.value;
   let alu_grado = formulario.alu_grado.value;
   let alu_arma = formulario.alu_arma.value;
   let alu_nac = formulario.alu_nac.value;
   const url = `/final_IS2_cornelio/API/alumnos/buscar?alu_nombre=${alu_nombre}&alu_apellido=${alu_apellido}&alu_grado=${alu_grado}&alu_arma=${alu_arma}&alu_nac=${alu_nac}`;
-  const config = {              
-      method : 'GET'
-  }
+  const config = {
+    method: "GET",
+  };
 
   try {
-      const respuesta = await fetch(url, config)
-      const data = await respuesta.json();
-      console.log(data);
-      tablaAlumnos.tBodies[0].innerHTML = ''
-      const fragment = document.createDocumentFragment();
-      
-      if(data.length > 0){
-          let contador = 1;
-          data.forEach( alumno => {
-              // CREAMOS ELEMENTOS
-              const tr = document.createElement('tr');
-              const td1 = document.createElement('td')
-              const td2 = document.createElement('td')
-              const td3 = document.createElement('td')
-              const td4 = document.createElement('td')
-              const td5 = document.createElement('td')
-              const td6 = document.createElement('td')
-              const td7 = document.createElement('td')
-              const td8 = document.createElement('td')
-              const buttonModificar = document.createElement('button')
-              const buttonEliminar = document.createElement('button')
+    const respuesta = await fetch(url, config);
+    const data = await respuesta.json();
+    console.log(data);
+    tablaAlumnos.tBodies[0].innerHTML = "";
+    const fragment = document.createDocumentFragment();
 
-              // CARACTERISTICAS A LOS ELEMENTOS
-              buttonModificar.classList.add('btn', 'btn-warning')
-              buttonEliminar.classList.add('btn', 'btn-danger')
-              buttonModificar.textContent = 'Modificar'
-              buttonEliminar.textContent = 'Eliminar'
+    if (data.length > 0) {
+      let contador = 1;
+      data.forEach((alumno) => {
+        // CREAMOS ELEMENTOS
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        const td2 = document.createElement("td");
+        const td3 = document.createElement("td");
+        const td4 = document.createElement("td");
+        const td5 = document.createElement("td");
+        const td6 = document.createElement("td");
+        const td7 = document.createElement("td");
+        const td8 = document.createElement("td");
+        const buttonModificar = document.createElement("button");
+        const buttonEliminar = document.createElement("button");
 
-              buttonModificar.addEventListener('click', () => colocarDatos(alumno))
-              buttonEliminar.addEventListener('click', () => eliminar(alumno.id_alumnos))
+        // CARACTERISTICAS A LOS ELEMENTOS
+        buttonModificar.classList.add("btn", "btn-warning");
+        buttonEliminar.classList.add("btn", "btn-danger");
+        buttonModificar.textContent = "Modificar";
+        buttonEliminar.textContent = "Eliminar";
 
-              td1.innerText = contador;
-              td2.innerText = alumno.alu_nombre
-              td3.innerText = alumno.alu_apellido
-              td4.innerText = alumno.alu_grado
-              td5.innerText = alumno.alu_arma
-              td6.innerText = alumno.alu_nac
-              
-              
-              // ESTRUCTURANDO DOM
-              td7.appendChild(buttonModificar)
-              td8.appendChild(buttonEliminar)
-              tr.appendChild(td1)
-              tr.appendChild(td2)
-              tr.appendChild(td3)
-              tr.appendChild(td4)
-              tr.appendChild(td5)
-              tr.appendChild(td6)
-              tr.appendChild(td7)
-              tr.appendChild(td8)
+        buttonModificar.addEventListener("click", () => colocarDatos(alumno));
+        buttonEliminar.addEventListener("click", () =>
+          eliminar(alumno.id_alumnos)
+        );
 
+        td1.innerText = contador;
+        td2.innerText = alumno.alu_nombre;
+        td3.innerText = alumno.alu_apellido;
+        td4.innerText = alumno.alu_grado;
+        td5.innerText = alumno.alu_arma;
+        td6.innerText = alumno.alu_nac;
 
-              fragment.appendChild(tr);
+        // ESTRUCTURANDO DOM
+        td7.appendChild(buttonModificar);
+        td8.appendChild(buttonEliminar);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        tr.appendChild(td5);
+        tr.appendChild(td6);
+        tr.appendChild(td7);
+        tr.appendChild(td8);
 
-              contador++;
-          })
-      }else{
-          const tr = document.createElement('tr');
-          const td = document.createElement('td')
-          td.innerText = 'No existen registros'
-          td.colSpan = 8
-          tr.appendChild(td)
-          fragment.appendChild(tr);
-      }
+        fragment.appendChild(tr);
 
-      tablaAlumnos.tBodies[0].appendChild(fragment)
+        contador++;
+      });
+    } else {
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.innerText = "No existen registros";
+      td.colSpan = 8;
+      tr.appendChild(td);
+      fragment.appendChild(tr);
+    }
+
+    tablaAlumnos.tBodies[0].appendChild(fragment);
   } catch (error) {
-      console.log(error);
+    console.log(error);
   }
-}
+};
 
 const colocarDatos = (datos) => {
-  formulario.alu_nombre.value = datos.alu_nombre
-  formulario.alu_apellido.value = datos.alu_apellido
-  formulario.alu_grado.value = datos.alu_grado
-  formulario.alu_arma.value = datos.alu_arma
-  formulario.alu_nac.value = datos.alu_nac
-  formulario.id_alumnos.value = datos.id_alumnos
+  formulario.alu_nombre.value = datos.alu_nombre;
+  formulario.alu_apellido.value = datos.alu_apellido;
+  formulario.alu_grado.value = datos.alu_grado;
+  formulario.alu_arma.value = datos.alu_arma;
+  formulario.alu_nac.value = datos.alu_nac;
+  formulario.id_alumnos.value = datos.id_alumnos;
 
-  btnGuardar.disabled = true
-  btnGuardar.parentElement.style.display = 'none'
-  btnBuscar.disabled = true
-  btnBuscar.parentElement.style.display = 'none'
-  btnModificar.disabled = false
-  btnModificar.parentElement.style.display = ''
-  btnCancelar.disabled = false
-  btnCancelar.parentElement.style.display = ''
-  divTabla.style.display = 'none'
+  btnGuardar.disabled = true;
+  btnGuardar.parentElement.style.display = "none";
+  btnBuscar.disabled = true;
+  btnBuscar.parentElement.style.display = "none";
+  btnModificar.disabled = false;
+  btnModificar.parentElement.style.display = "";
+  btnCancelar.disabled = false;
+  btnCancelar.parentElement.style.display = "";
+  divTabla.style.display = "none";
 
   // modalEjemploBS.show();
-}
+};
 
 const cancelarAccion = () => {
-  btnGuardar.disabled = false
-  btnGuardar.parentElement.style.display = ''
-  btnBuscar.disabled = false
-  btnBuscar.parentElement.style.display = ''
-  btnModificar.disabled = true
-  btnModificar.parentElement.style.display = 'none'
-  btnCancelar.disabled = true
-  btnCancelar.parentElement.style.display = 'none'
-  divTabla.style.display = ''
-}
+  btnGuardar.disabled = false;
+  btnGuardar.parentElement.style.display = "";
+  btnBuscar.disabled = false;
+  btnBuscar.parentElement.style.display = "";
+  btnModificar.disabled = true;
+  btnModificar.parentElement.style.display = "none";
+  btnCancelar.disabled = true;
+  btnCancelar.parentElement.style.display = "none";
+  divTabla.style.display = "";
+};
 
 const modificar = async (evento) => {
   evento.preventDefault();
@@ -275,7 +274,7 @@ window.eliminar = async (id_alumnos) => {
 
 buscar();
 
-formulario.addEventListener("submit", guardar)
-btnBuscar.addEventListener("click", buscar)
-btnCancelar.addEventListener("click", cancelarAccion)
-btnModificar.addEventListener("click", modificar)
+formulario.addEventListener("submit", guardar);
+btnBuscar.addEventListener("click", buscar);
+btnCancelar.addEventListener("click", cancelarAccion);
+btnModificar.addEventListener("click", modificar);

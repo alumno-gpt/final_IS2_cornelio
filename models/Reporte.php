@@ -3,7 +3,8 @@
 namespace Model;
 
 
-class Reporte extends ActiveRecord{
+class Reporte extends ActiveRecord
+{
     public $id_calificaciones;
     public $calif_alumno;
     public $calif_materia;
@@ -11,7 +12,7 @@ class Reporte extends ActiveRecord{
     public $calif_resultado;
     public $detalle_situacion;
 
-    public function __construct($args = [] )
+    public function __construct($args = [])
     {
         $this->id_calificaciones = $args['id_calificaciones'] ?? null;
         $this->calif_alumno = $args['calif_alumno'] ?? '';
@@ -24,7 +25,7 @@ class Reporte extends ActiveRecord{
     public function average()
     {
         $sql = "SELECT AVG(calif_punteo) as promedio FROM calificaciones WHERE calif_alumno = '$this->calif_alumno' AND detalle_situacion = '1'";
-        
+
         return self::fetchArray($sql);
     }
 
@@ -43,17 +44,16 @@ class Reporte extends ActiveRecord{
         FROM calificaciones INNER JOIN materias ON calif_materia = id_materias 
         INNER JOIN alumnos ON calif_alumno = id_alumnos
         WHERE calificaciones.detalle_situacion = 1 and calif_alumno = '$this->calif_alumno'";
- 
+
         return self::fetchArray($sql);
     }
 
     public function genReporte()
     {
-        $alumno = self::dataAlumno();//Debemos aqui hacer la consulta que trae la informacion de la persona.
+        $alumno = self::dataAlumno();
 
         $calificaciones = self::calificaciones();
-        
-        //promedio
+
         $promedio = self::average();
 
         $data['alumno'] = $alumno;
@@ -61,8 +61,6 @@ class Reporte extends ActiveRecord{
         $data['promedio'] = $promedio;
 
         return $data;
-
-        //generamos el array con los datos que responderemos a la vista
 
     }
 }

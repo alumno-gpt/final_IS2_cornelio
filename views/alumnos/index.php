@@ -34,7 +34,8 @@
         </div>
         <div class="row mb-3">
             <div class="col">
-                <button type="submit" form="formularioAlumno" id="btnGuardar" data-saludo= "hola" data-saludo2="hola2" class="btn btn-primary w-100">Guardar</button>
+                <button type="submit" form="formularioAlumno" id="btnGuardar" data-saludo="hola" data-saludo2="hola2"
+                    class="btn btn-primary w-100">Guardar</button>
             </div>
             <div class="col">
                 <button type="button" id="btnModificar" class="btn btn-warning w-100">Modificar</button>
@@ -70,4 +71,4 @@
         </table>
     </div>
 </div>
-<script src="<?= asset('./build/js/alumnos/index.js')  ?>"></script>
+<script src="<?= asset('./build/js/alumnos/index.js') ?>"></script>

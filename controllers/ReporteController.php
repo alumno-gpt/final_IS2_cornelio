@@ -11,17 +11,19 @@ use MVC\Router;
 
 
 
-class ReporteController{
+class ReporteController
+{
 
-    public static function index(Router $router){
+    public static function index(Router $router)
+    {
         // $reportes = Reporte::all();
         $alumnos = static::buscarAlumnos();
         $router->render('reportes/index', [
             'alumnos' => $alumnos,
-      ]);
+        ]);
 
     }
- 
+
 
     public static function genReporte()
     {
@@ -31,7 +33,7 @@ class ReporteController{
             $resultado = $reporte->genReporte();
 
             echo json_encode($resultado);
-            
+
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
@@ -41,22 +43,22 @@ class ReporteController{
         }
     }
 
-    public static function buscarAlumnos(){
-        $sql= "SELECT * FROM alumnos where detalle_situacion = 1";
-    
-       try {
-           
-      $alumnos = Calificacion::fetchArray($sql);
-           if ($alumnos){
-            return $alumnos;
+    public static function buscarAlumnos()
+    {
+        $sql = "SELECT * FROM alumnos where detalle_situacion = 1";
 
-           }else{
-            return 0;
-           }
+        try {
 
-       } catch (Exception $e) {
+            $alumnos = Calificacion::fetchArray($sql);
+            if ($alumnos) {
+                return $alumnos;
 
-       }
-   }
+            } else {
+                return 0;
+            }
+
+        } catch (Exception $e) {
+
+        }
+    }
 }
-

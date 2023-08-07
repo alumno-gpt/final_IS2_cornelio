@@ -7,68 +7,43 @@ use Model\Calificacion;
 use MVC\Router;
 
 
-class CalificacionController{
+class CalificacionController
+{
     public static function index(Router $router)
-    { 
-       $alumnos = static::buscarAlumnos();
-       $materias = static::buscarMaterias();
-    //    $calif_alumno= static::buscarInfo();
+    {
+        $alumnos = static::buscarAlumnos();
+        $materias = static::buscarMaterias();
+        //    $calif_alumno= static::buscarInfo();
 
         $router->render('calificaciones/index', [
             'alumnos' => $alumnos,
             'materias' => $materias,
             // 'calif_alumno' => $calif_alumno,
-      ]);
+        ]);
 
     }
 
-    // public static function guardarAPI(){
-    //     try {
-    //         $calificacion = new Calificacion($_POST);
-    //         $resultado = $calificacion->crear();
-
-    //         if($resultado['resultado'] == 1){
-    //             echo json_encode([
-    //                 'mensaje' => 'Registro guardado correctamente', 
-    //                 'codigo' => 1
-    //             ]);
-    //         }else{
-    //             echo json_encode([
-    //                 'mensaje' => 'Ocurrió un error',
-    //                 'codigo' => 0
-    //             ]);
-    //         }
-    //         // echo json_encode($resultado);
-    //     } catch (Exception $e) {
-    //         echo json_encode([
-    //             'detalle' => $e->getMessage(),
-    //             'mensaje' => 'Ocurrió un error',
-    //             'codigo' => 0
-    //         ]);
-    //     }
-    // }
-
-
-
-    function nota_literal($nota){
-        if($nota >= 70){
+    function nota_literal($nota)
+    {
+        if ($nota >= 70) {
             return "Gano";
-        }else{
+        } else {
             return "Perdio";
         }
     }
-    function guardarAPI(){
+    function guardarAPI()
+    {
         try {
             $calificacion = new Calificacion($_POST);
             $resultado = $calificacion->crear();
-    
-            if($resultado['resultado'] == 1){
+
+            if ($resultado['resultado'] == 1) {
                 echo json_encode([
-                    'mensaje' => 'Registro guardado correctamente', 
+                    'mensaje' => 'Registro guardado correctamente',
                     'codigo' => 1,
                     'nota_literal' => nota_literal($calificacion->nota)
                 ]);
-            }else{
+            } else {
                 echo json_encode([
                     'mensaje' => 'Ocurrió un error',
                     'codigo' => 0
@@ -83,17 +58,18 @@ class CalificacionController{
             ]);
         }
     }
-    public static function modificarAPI(){
+    public static function modificarAPI()
+    {
         try {
             $calificacion = new Calificacion($_POST);
             $resultado = $calificacion->actualizar();
 
-            if($resultado['resultado'] == 1){
+            if ($resultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
                     'codigo' => 1
                 ]);
-            }else{
+            } else {
                 echo json_encode([
                     'mensaje' => 'Ocurrió un error',
                     'codigo' => 0
@@ -109,20 +85,21 @@ class CalificacionController{
         }
     }
 
-    
-    
-    public static function eliminarAPI(){
+
+
+    public static function eliminarAPI()
+    {
         try {
             $calificacion = new Calificacion($_POST);
             $calificacion->detalle_situacion = 0;
             $resultado = $calificacion->eliminarCalificacion();
 
-            if($resultado['resultado'] == 1){
+            if ($resultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro eliminado correctamente',
                     'codigo' => 1
                 ]);
-            }else{
+            } else {
                 echo json_encode([
                     'mensaje' => 'Ocurrió un error',
                     'codigo' => 0
@@ -153,21 +130,22 @@ class CalificacionController{
     //     if($this->calif_materia != '') {
     //         $sql.= " and calif_materia = '$this->calif_materia' ";
     //     }
- 
+
     //     return self::fetchArray($sql);
     // }
 
-    
-    
+
+
     //funcion para buscar en la API
-    public static function buscarAPI(){ 
+    public static function buscarAPI()
+    {
 
         $calificaciones = new Calificacion($_GET);
 
         try {
-            
+
             $resultado = $calificaciones->buscarInfo();
-    
+
             echo json_encode($resultado);
 
         } catch (Exception $e) {
@@ -178,44 +156,45 @@ class CalificacionController{
             ]);
         }
     }
-    
+
     //funcion para buscar el nombre del alumno
-    public static function buscarAlumnos(){
-        $sql= "SELECT * FROM alumnos where detalle_situacion = 1";
-    
-       try {
-           
-      $alumnos = Calificacion::fetchArray($sql);
-           if ($alumnos){
-            return $alumnos;
+    public static function buscarAlumnos()
+    {
+        $sql = "SELECT * FROM alumnos where detalle_situacion = 1";
 
-           }else{
-            return 0;
-           }
+        try {
 
-       } catch (Exception $e) {
+            $alumnos = Calificacion::fetchArray($sql);
+            if ($alumnos) {
+                return $alumnos;
 
-       }
-   }
-   
-   //funcion para buscar el nombre de la materia
-   public static function buscarMaterias(){
-        $sql= "SELECT * FROM materias where detalle_situacion = 1";
-    
-       try {
-           
-      $materias = Calificacion::fetchArray($sql);
-           if ($materias){
-            return $materias;
+            } else {
+                return 0;
+            }
 
-           }else{
-            return 0;
-           }
+        } catch (Exception $e) {
 
-       } catch (Exception $e) {
+        }
+    }
 
-       }
-   }
+    //funcion para buscar el nombre de la materia
+    public static function buscarMaterias()
+    {
+        $sql = "SELECT * FROM materias where detalle_situacion = 1";
+
+        try {
+
+            $materias = Calificacion::fetchArray($sql);
+            if ($materias) {
+                return $materias;
+
+            } else {
+                return 0;
+            }
+
+        } catch (Exception $e) {
+
+        }
+    }
 
 }
-
